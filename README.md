@@ -87,4 +87,4 @@ platformio.ini
 
 ## Licença
 
-Sem licença definida.
+Distribuído sob a licença MIT. Veja [LICENSE](LICENSE) para mais detalhes.

@@ -41,4 +41,11 @@ void accelReadSmoothed(float &x, float &y, float &z);
 // Descarta o estado do filtro para que a proxima leitura recomece "limpa".
 void accelResetFilter();
 
+// Detecta uma "chacoalhada": pico na magnitude da aceleracao acima de um
+// limiar. Como a gravidade mantem ~1g em qualquer inclinacao estatica, apenas
+// um movimento brusco dispara (inclinar a placa para girar a forma nao conta).
+// Usa a ultima amostra lida por accelReadSmoothed(), entao chame logo depois.
+// Tem cooldown interno para nao disparar varias vezes na mesma chacoalhada.
+bool accelShakeDetected();
+
 #endif // DEVICES_H

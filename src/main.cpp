@@ -80,6 +80,11 @@ void loop() {
 
   if (currentMode == MODE_SHAPE && displayOK && accelOK) {
     runShape();
+    // Chacoalhar a placa alterna entre cubo e triangulo. Checa logo apos a
+    // leitura feita em runShape(), usando a mesma amostra.
+    if (accelShakeDetected()) {
+      toggleShape();
+    }
     delay(50);
   } else {
     delay(20); // no menu, so aguarda comandos

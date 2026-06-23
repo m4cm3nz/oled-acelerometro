@@ -1,4 +1,5 @@
 #include <Wire.h>
+#include <math.h>
 #include "devices.h"
 #include "config.h"
 #include "debug.h"
@@ -120,4 +121,28 @@ void accelReadSmoothed(float &x, float &y, float &z) {
   }
 
   x = fx; y = fy; z = fz;
+}
+
+// ===========================================================================
+//  Deteccao de chacoalhada
+// ---------------------------------------------------------------------------
+//  Em repouso a magnitude vale ~1g em qualquer orientacao; so um movimento
+//  brusco a leva acima de SHAKE_THRESHOLD_G. Usa os valores calibrados (em g)
+//  da ultima leitura, entao independe da escala configurada.
+// ===========================================================================
+static const float SHAKE_THRESHOLD_G = 1.7f;       // magnitude acima disso = shake
+static const unsigned long SHAKE_COOLDOWN_MS = 600; // espera entre disparos
+
+bool accelShakeDetected() {
+  float mag = sqrt(accel.cx * accel.cx +
+                   accel.cy * accel.cy +
+                   accel.cz * accel.cz);
+
+  static unsigned long lastShakeMs = 0;
+  unsigned long now = millis();
+  if (mag > SHAKE_THRESHOLD_G && (now - lastShakeMs) > SHAKE_COOLDOWN_MS) {
+    lastShakeMs = now;
+    return true;
+  }
+  return false;
 }

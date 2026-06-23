@@ -69,6 +69,8 @@ Digite no monitor serial para testar cada dispositivo individualmente:
 | `t`   | Animar o triângulo (tetraedro)            |
 | `?`   | Mostrar o menu                            |
 
+> **No hardware:** **chacoalhe a placa** para alternar entre o cubo e o triângulo, sem precisar do monitor serial. A troca usa a magnitude da aceleração (limiar de ~1,7 g com *cooldown*), então inclinar a placa para girar a forma não dispara a troca.
+
 Para desabilitar as mensagens de debug em produção, ajuste em [platformio.ini](platformio.ini):
 
 ```ini

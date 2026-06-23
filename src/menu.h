@@ -15,6 +15,9 @@ extern const Shape *currentShape;  // forma desenhada no MODE_SHAPE
 void printMenu();
 void handleSerialCommand(char c);
 
+// Alterna entre cubo e triangulo (usado pela chacoalhada no hardware).
+void toggleShape();
+
 // Rotinas de teste individuais (acionadas pelo menu serial).
 void testDisplay();
 void testAccel();

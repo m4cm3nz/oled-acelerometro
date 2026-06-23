@@ -76,6 +76,7 @@ void printMenu() {
   DBG_PRINTLN(F("  r = reinicializar dispositivos"));
   DBG_PRINTLN(F("  c = animar o cubo (modo normal)"));
   DBG_PRINTLN(F("  t = animar o triangulo (tetraedro)"));
+  DBG_PRINTLN(F("  (chacoalhe a placa para alternar a forma)"));
   DBG_PRINTLN(F("  ? = mostrar este menu"));
   DBG_PRINTLN(F("==============================="));
 }
@@ -86,6 +87,14 @@ static void selectShape(const Shape *shape, const __FlashStringHelper *name) {
   accelResetFilter();  // recomeca o filtro ao trocar de forma
   DBG_PRINT(F("Modo forma: "));
   DBG_PRINTLN(name);
+}
+
+void toggleShape() {
+  if (currentShape == &SHAPE_CUBE) {
+    selectShape(&SHAPE_TRIANGLE, F("triangulo"));
+  } else {
+    selectShape(&SHAPE_CUBE, F("cubo"));
+  }
 }
 
 void handleSerialCommand(char c) {

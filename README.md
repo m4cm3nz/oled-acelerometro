@@ -1,6 +1,6 @@
 # oled-acelerometro
 
-Cubo 3D rotacionado em tempo real num display OLED **SSD1306**, controlado pela inclinação de um acelerômetro **MMA8452Q**. O cubo gira conforme você move a placa.
+Forma 3D (cubo ou triângulo/tetraedro) rotacionada em tempo real num display OLED **SSD1306**, controlada pela inclinação de um acelerômetro **MMA8452Q**. A forma gira conforme você move a placa, com leitura suavizada por filtro passa-baixa para um movimento estável.
 
 Projeto em C++ para **Arduino Uno**, usando [PlatformIO](https://platformio.org/).
 
@@ -30,8 +30,7 @@ Ambos os dispositivos compartilham o mesmo barramento I2C:
 Gerenciadas automaticamente pelo PlatformIO ([platformio.ini](platformio.ini)):
 
 - `sparkfun/SparkFun_MMA8452Q`
-- `adafruit/Adafruit SSD1306`
-- `elc0mpa/OLED_SSD1306_Chart`
+- `adafruit/Adafruit SSD1306` (puxa `Adafruit GFX` e `Adafruit BusIO`)
 
 ## Como compilar e gravar
 
@@ -66,7 +65,8 @@ Digite no monitor serial para testar cada dispositivo individualmente:
 | `d`   | Testar apenas o display                   |
 | `a`   | Testar apenas o acelerômetro (10 leituras)|
 | `r`   | Reinicializar os dispositivos             |
-| `c`   | Rodar a animação do cubo (modo normal)    |
+| `c`   | Animar o cubo (modo normal)               |
+| `t`   | Animar o triângulo (tetraedro)            |
 | `?`   | Mostrar o menu                            |
 
 Para desabilitar as mensagens de debug em produção, ajuste em [platformio.ini](platformio.ini):
@@ -80,10 +80,17 @@ build_flags =
 
 ```
 src/
-  main.cpp    # Lógica principal, diagnóstico e animação do cubo
-  debug.h     # Macros de debug controladas por DEBUG_ENABLED
+  main.cpp     # setup/loop: orquestra inicialização e modos
+  config.h     # constantes de hardware (telas, endereços I2C)
+  devices.*    # display, acelerômetro, scan I2C e leitura suavizada
+  shapes.*     # formas 3D (cubo, triângulo) e renderização wireframe
+  menu.*       # menu serial, testes e modo atual
+  debug.h      # macros de debug controladas por DEBUG_ENABLED
 platformio.ini
 ```
+
+As formas são descritas apenas por dados (vértices + arestas) em `shapes.cpp`,
+então adicionar uma nova forma não exige duplicar a lógica de rotação/projeção.
 
 ## Licença
 

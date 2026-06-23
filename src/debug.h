@@ -15,7 +15,7 @@
   #ifdef DEBUG
     #define DEBUG_ENABLED 1
   #else
-    #define DEBUG_ENABLED 1   // padrao: ligado (mude para 0 em producao)
+    #define DEBUG_ENABLED 0   // padrao: desligado; ligue via build_flags no dev
   #endif
 #endif
 
